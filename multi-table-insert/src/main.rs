@@ -5,6 +5,7 @@ use util::ConnectionExt;
 
 const SET_UP: &str = "./sql/setup.sql";
 const MULTI_INSERT: &str = "./sql/multi_table_insert.sql";
+const TXN: &str = "./sql/txn.sql";
 const RUN: usize = 100;
 
 #[tokio::main]
@@ -13,6 +14,7 @@ async fn main() -> Result<()> {
         "databend://root:@localhost:8000/default?sslmode=disable&enable_experimental_merge_into=1"
             .to_owned(),
     );
+    println!("dsn: {}", dsn);
     let client = Client::new(dsn);
     let c1 = client.get_conn().await?;
     c1.exec_lines(SET_UP).await?;
@@ -42,7 +44,7 @@ async fn main() -> Result<()> {
     for i in 0..RUN {
         let start = std::time::Instant::now();
         let c = client.get_conn().await?;
-        match c.exec_lines(MULTI_INSERT).await {
+        match c.exec_lines(TXN).await {
             Ok(_) => {
                 success += 1;
             }
