@@ -17,7 +17,7 @@ The configuration file `config.conf` contains the following parameters:
 
 - `SOURCE_DIR`: The local directory path containing Databend data that needs to be backed up
 - `REMOTE_USER`: Username for SSH connection to the remote backup server 
-- `REMOTE_HOST`: Hostname or IP address of the remote backup server
+- `REMOTE_HOST`: IP address of the remote backup server
 - `TARGET_DIR`: Directory on the remote server where backup data will be stored
 - `DATABEND_META_BIN`: Path to the databend-meta binary on the remote server
 - `DATABEND_QUERY_BIN`: Path to the databend-query binary on the remote server  
@@ -32,7 +32,7 @@ The `backup.sh` script performs the backup of Databend data to the remote server
 - Deletes files on target that no longer exist in source
 - Excludes temporary files (starting with _)
 
-### Validation Script (run_sql.sh)
+### Validation Script (validate.sh)
 
 The `validate.sh` script validates the backed up data by:
 - Starting up a Databend instance using the backed up data and meta
